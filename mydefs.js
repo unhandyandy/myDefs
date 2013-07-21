@@ -264,6 +264,35 @@ Array.prototype.equal = function(arr){
 		      });
 };
 
+everyLp = function( o, fun, that ){
+    "use strict";
+    if( that === undefined ){
+	that = o;
+    }
+    var i, l = o.length, res = true;
+    for ( i=0; i<l; i++ ){
+	 if ( !fun.call( that, o[i], i ) ){
+	     res = false;
+	     break;}}
+    return res;
+};
+
+equalLp = function(arr1,arr2){
+	"use strict";
+    if(arr1.length !== arr2.length){
+	return false;
+    }
+    return everyLp( arr1, 
+		    function(e,i){
+			if(typeof(e) === "object"){
+			    return e.equal(arr2[i]);
+			}
+			else{
+			    return e === arr2[i];
+			}
+		    });
+};
+
 String.prototype.equal = function(str){
 	"use strict";
     return this === str;
@@ -338,6 +367,11 @@ Array.prototype.vectorAdd = function(vct){
 		    });
 };
 
+Array.prototype.vector2Add = function(vct){
+     "use strict";
+    return [ this[0] + vct[0], this[1] + vct[1] ];
+};
+
 Array.prototype.scalarMult = function(s){
     "use strict";
     return this.map(function(x){
@@ -351,6 +385,10 @@ Array.prototype.vectorMinus = function(vct){
 			return x - vct[i];
 		    });
 };
+Array.prototype.vector2Minus = function(vct){
+     "use strict";
+    return [ this[0] - vct[0], this[1] - vct[1] ];
+};
 
 Array.prototype.map2 = function(fun,o){
     "use strict";
@@ -363,6 +401,17 @@ Array.prototype.map2 = function(fun,o){
 	};
     return this.map(fun1,o);
 };
+mapLp = function( o, fun, that ){
+    "use strict";
+    if( that === undefined ){
+	that = o;
+    }
+    var i, l = o.length, res = [];
+    for ( i=0; i<l; i++ ){
+	res.push( fun.call( that, o[i], i ) ); }
+    return res;
+};
+
 Array.prototype.forEach2 = function(fun,o){
     "use strict";
     if(o===undefined){
@@ -373,6 +422,15 @@ Array.prototype.forEach2 = function(fun,o){
 	    lst.forEach(fun,o);
 	};
     this.forEach(fun1,o);
+};
+eachLp = function( o, fun, that ){
+    "use strict";
+    if( that === undefined ){
+	that = o;
+    }
+    var i, l=o.length;
+    for ( i=0; i<l; i++ ){
+	fun.call( that, o[i], i); }
 };
 Array.prototype.filter2 = function(fun,o){
     "use strict";
