@@ -285,7 +285,7 @@ equalLp = function(arr1,arr2){
     return everyLp( arr1, 
 		    function(e,i){
 			if(typeof(e) === "object"){
-			    return e.equal(arr2[i]);
+			    return equalLp( e, arr2[i] );
 			}
 			else{
 			    return e === arr2[i];
@@ -591,6 +591,13 @@ if (typeof Object.create !== 'function') {
 }
 //newObject = Object.create(oldObject);
 
+if (typeof Object.clone !== 'function') {
+    Object.clone = function ( o ) {
+    "use strict";
+        return JSON.parse( JSON.stringify ( o ) );
+    };
+}
+
 // returns a boolean function that checks whether fun is equal to cns 
 function makeValCheck( fun, cns ){
     "use strict";
@@ -689,7 +696,7 @@ function sortLists( lst ){
 // destructive dot product 
 function dotD( l1, l2 ){
     "use strict";
-    if ( l1.length === 0 && l2.length === 0 ) {
+    if ( l1.length === 0 || l2.length === 0 ) {
 	return 0;
     }
     var h1, h2;
@@ -748,30 +755,31 @@ function setClickHandler( id, fnc ){
 
 
 
-function makeButton (txt,idtxt,func,width,height,fsize,bgcolor,ffamily) {
-    "use strict";
-    if (!width) {
-	width = "1*";
-    }
-    if (!height) {
-	height = "1*";
-    }
-    if (!fsize) {
-	fsize = "14";
-    }
-    if ( !bgcolor ) {
-	bgcolor = "Chartreuse";
-    }    
-    if ( !ffamily ) {
-	ffamily = "Georgia, Times New Roman, Comic Sans MS, Helvetica, Palatino";
-    }    
-    var stytxt = "style='width:" + width + ";font-family:" + ffamily + ";background-color:" + bgcolor + ";height:" + height + ";font-size:" + fsize + ";'";
-    setClickHandler( idtxt, func );
-    return "<input type='button' value='"+txt+"' "+stytxt+" id='"+idtxt+"'>";
-}
+// function makeButton (txt,idtxt,func,width,height,fsize,bgcolor,ffamily) {
+//     "use strict";
+//     if (!width) {
+// 	width = "1*";
+//     }
+//     if (!height) {
+// 	height = "1*";
+//     }
+//     if (!fsize) {
+// 	fsize = "14";
+//     }
+//     if ( !bgcolor ) {
+// 	bgcolor = "Chartreuse";
+//     }    
+//     if ( !ffamily ) {
+// 	ffamily = "Georgia, Times New Roman, Comic Sans MS, Helvetica, Palatino";
+//     }    
+//     var stytxt = "style='margin-top:10px;' + 'width:" + width + ";font-family:" + ffamily + ";background-color:" + bgcolor + ";height:" + height + ";font-size:" + fsize + ";'";
+//     setClickHandler( idtxt, func );
+//     return "<input type='button' value='"+txt+"' "+stytxt+" id='"+idtxt+"'>";
+//     //return "<button value='"+txt+"' "+stytxt+" id='"+idtxt+"'></button>";
+// }
 
 var buttonOpts = {
-    "text": "Button", "idtext": "button", "width": "1*", "height": "1*", "fontSize": "14", "bgColor": "Chartreuse", "fontFamily": "Georgia, Times New Roman, Comic Sans MS, Helvetica, Palatino", "fontStyle": "normal"
+    "text": "Button", "idtext": "button", "width": "1*", "height": "1*", "fontSize": "14", "bgColor": "Chartreuse", "fontFamily": "Georgia, Times New Roman, Comic Sans MS, Helvetica, Palatino", "fontStyle": "normal", 'marginTop': 10
 };
 
 // buttonOpts maker 
