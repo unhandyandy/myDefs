@@ -334,6 +334,16 @@ Array.prototype.removeAll = function ( elem ){
     return this;
 };
 
+Array.prototype.removeOne = function ( elem ) {
+    "use strict";
+    var hd;
+    if ( this.length !== 0 ){
+	hd = this.pop();
+	if ( ! hd.equal( elem ) ){
+	    this.removeOne( elem );
+	    this.push( hd );}
+    }};
+
 Array.prototype.removeAllC = function ( elem ){
     "use strict";
     // return true if e equal to elem
