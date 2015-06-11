@@ -861,3 +861,28 @@ function oddQ( n ){
     "use strict";
     return !evenQ( n );
 }
+
+
+//iterator for sequence of n numbers summing to s
+var numberSeqSum = {
+    "n": 0,
+    "s": 0,
+    "new": function(n,s){
+	"use strict";
+	var newiter
+	newiter = Object.create( numberSeqSum );
+	newiter.n = n;
+	newiter.s = s;
+	return newiter; },
+    "next": function(){
+	"use strict";
+	var res = 0,
+	    i, r;
+	for ( i=0; i<=s; i+=1 ){
+	    r = Math.random();
+	    if ( r <= this.n/this.s ){
+		this.n -= 1;
+		return i; }
+	    else{
+		this.s -= 1; } } }
+};
