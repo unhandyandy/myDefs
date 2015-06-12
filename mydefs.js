@@ -869,20 +869,25 @@ var numberSeqSum = {
     "s": 0,
     "new": function(n,s){
 	"use strict";
-	var newiter
+	var newiter;
 	newiter = Object.create( numberSeqSum );
 	newiter.n = n;
 	newiter.s = s;
 	return newiter; },
     "next": function(){
 	"use strict";
-	var res = 0,
-	    i, r;
-	for ( i=0; i<=s; i+=1 ){
+	if ( this.n === 0 ){
+	    return false; }
+	else if ( this.n === 1 ){
+	    this.n = 0;
+	    return this.s; }
+	var i, r, p, m = this.s;
+	for ( i=0; i<=m; i+=1 ){
 	    r = Math.random();
-	    if ( r <= this.n/this.s ){
+	    p = (this.n - 1)/(this.s + 1);
+	    if ( r <= p ){
 		this.n -= 1;
 		return i; }
-	    else{
-		this.s -= 1; } } }
+    	    this.s -= 1;
+	} }
 };
